@@ -20,8 +20,8 @@ Secure session-based access control
  Modular Flask architecture (Blueprint-based structure)
  
  Tech Stack:
-Backend: Flask (Python)
-Database: SQLite / MySQL (configurable)
+Backend: Python
+Database:  MySQL
 ORM: SQLAlchemy
 Frontend: HTML, CSS, JavaScript
 Authentication: Flask Sessions + Werkzeug Security
