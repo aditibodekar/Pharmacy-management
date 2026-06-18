@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customers</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Pharmacy System</h2>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/medicines-page">Medicines</a>
+    <a href="/customers-page">Customers</a>
+    <a href="/suppliers-page">Suppliers</a>
+    <a href="/sales-page">Sales</a>
+    <a href="/purchases-page">Purchases</a>
+</div>
+
+<div class="main-content">
+    {% extends "base.html" %}
+{% block content %}
+
+<h1>Customers Management</h1>
+
+<div class="form-container">
+    <form method="POST" action="/customers">
+
+    <input type="hidden" name="id" id="id">
+
+    <input type="text" name="name" id="name" placeholder="Name">
+    <input type="number" name="age" id="age" placeholder="Age">
+    
+    <input type="text" name="gender" id="gender" placeholder="Gender">
+    <input type="text" name="phone" id="phone" placeholder="Phone">
+    <input type="email" name="email" id="email" placeholder="Email">
+    <input type="text" name="address" id="address" placeholder="Address">
+
+    <button type="submit">Save Customer</button>
+
+</form>
+</div>
+
+<div class="table-container">
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for customer in customers %}
+    <tr>
+        <td>{{ customer.id }}</td>
+        <td>{{ customer.name }}</td>
+        <td>{{ customer.age }}</td>
+        <td>{{ customer.gender }}</td>
+        <td>{{ customer.phone }}</td>
+        <td>{{ customer.email }}</td>
+        <td>{{ customer.address }}</td>
+        <td>
+            <a href="#" class="edit-btn"
+   data-id="{{ customer.id }}"
+   data-name="{{ customer.name }}"
+   data-age="{{ customer.age }}"
+   data-gender="{{ customer.gender }}"
+   data-phone="{{ customer.phone }}"
+   data-email="{{ customer.email }}"
+   data-address="{{ customer.address }}">
+   Edit
+</a>
+
+<a href="/delete-customer/{{ customer.id }}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+
+{% endblock %}
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.querySelectorAll(".edit-btn").forEach(btn => {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            document.getElementById("id").value = this.dataset.id || "";
+            document.getElementById("name").value = this.dataset.name || "";
+            document.getElementById("age").value = this.dataset.age || "";
+            document.getElementById("gender").value = this.dataset.gender || "";
+            document.getElementById("phone").value = this.dataset.phone || "";
+            document.getElementById("email").value = this.dataset.email || "";
+            document.getElementById("address").value = this.dataset.address || "";
+        });
+    });
+
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Purchases</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Pharmacy System</h2>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/medicines-page">Medicines</a>
+    <a href="/customers-page">Customers</a>
+    <a href="/suppliers-page">Suppliers</a>
+    <a href="/sales-page">Sales</a>
+    <a href="/purchases-page">Purchases</a>
+</div>
+
+<div class="main-content">
+    {% extends "base.html" %}
+{% block content %}
+
+<h1>Purchases Management</h1>
+
+<div class="form-container">
+    <form method="POST" action="/purchases">
+
+    <input type="hidden" id="id" name="id">
+
+    <input type="text" id="supplier_id" name="supplier_id" placeholder="Supplier ID">
+    <input type="text" id="medicine_name" name="medicine_name" placeholder="Medicine Name">
+    <input type="number" id="quantity" name="quantity" placeholder="Quantity">
+    <input type="number" id="purchase_price" name="purchase_price" placeholder="Purchase Price">
+    <input type="number" id="total_amount" name="total_amount" placeholder="Total Amount">
+    <input type="date" id="purchase_date" name="purchase_date">
+
+    <button type="submit">Save Purchase</button>
+
+</form>
+</div>
+
+<div class="table-container">
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Supplier ID</th>
+        <th>Medicine</th>
+        <th>Qty</th>
+        <th>Purchase Price</th>
+        <th>Total</th>
+        <th>Date</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for purchase in purchases %}
+    <tr>
+        <td>{{ purchase.id }}</td>
+        <td>{{ purchase.supplier_id }}</td>
+        <td>{{ purchase.medicine_name }}</td>
+        <td>{{ purchase.quantity }}</td>
+        <td>{{ purchase.purchase_price }}</td>
+        <td>{{ purchase.total_amount }}</td>
+        <td>{{ purchase.purchase_date }}</td>
+        <td>
+            <a href="#" class="edit-purchase-btn"
+   data-id="{{ purchase.id }}"
+   data-supplier="{{ purchase.supplier_id }}"
+   data-medicine="{{ purchase.medicine_name }}"
+   data-quantity="{{ purchase.quantity }}"
+   data-price="{{ purchase.purchase_price }}"
+   data-total="{{ purchase.total_amount }}"
+   data-date="{{ purchase.purchase_date }}">
+   Edit
+</a>
+
+<a href="/delete-purchase/{{ purchase.id }}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+
+{% endblock %}
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.querySelectorAll(".edit-purchase-btn").forEach(btn => {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            function setValue(id, value) {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.value = value || "";
+                }
+            }
+
+            setValue("id", this.dataset.id);
+            setValue("supplier_id", this.dataset.supplier);
+            setValue("medicine_name", this.dataset.medicine);
+            setValue("quantity", this.dataset.quantity);
+            setValue("purchase_price", this.dataset.price);
+            setValue("total_amount", this.dataset.total);
+            setValue("purchase_date", this.dataset.date);
+
+            console.log("Purchase edit loaded");
+        });
+    });
+
+});
+</script>
+</body>
+</html>

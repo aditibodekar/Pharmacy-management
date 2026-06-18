@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Edit Medicine</h1>
+
+<form method="POST">
+
+    <input type="text" name="name" value="{{ medicine.name }}">
+    <input type="text" name="category" value="{{ medicine.category }}">
+    <input type="text" name="supplier" value="{{ medicine.supplier }}">
+    <input type="text" name="batch_no" value="{{ medicine.batch_no }}">
+
+    <input type="number" name="purchase_price" value="{{ medicine.purchase_price }}">
+    <input type="number" name="selling_price" value="{{ medicine.selling_price }}">
+    <input type="number" name="stock" value="{{ medicine.stock }}">
+
+    <input type="date" name="manufacture_date" value="{{ medicine.manufacture_date }}">
+    <input type="date" name="expiry_date" value="{{ medicine.expiry_date }}">
+
+    <input type="text" name="barcode" value="{{ medicine.barcode }}">
+
+    <button type="submit">Update</button>
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pharmacy Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="main-content">
+   <a href="/dashboard"></a>
+</div>
+   {% block content %}{% endblock %}
+<script>
+function editMedicine(id, name, category, supplier, batch_no,
+                      purchase_price, selling_price, stock,
+                      manufacture_date, expiry_date, barcode) {
+
+    document.getElementById("medicine_id").value = id;
+    document.getElementById("name").value = name;
+    document.getElementById("category").value = category;
+    document.getElementById("supplier").value = supplier;
+    document.getElementById("batch_no").value = batch_no;
+
+    document.getElementById("purchase_price").value = purchase_price;
+    document.getElementById("selling_price").value = selling_price;
+    document.getElementById("stock").value = stock;
+
+    document.getElementById("manufacture_date").value = manufacture_date;
+    document.getElementById("expiry_date").value = expiry_date;
+    document.getElementById("barcode").value = barcode;
+}
+</script>
+<script>
+console.log("BASE JS LOADED");
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    console.log("DOM READY");
+
+    document.querySelectorAll(".edit-btn").forEach(btn => {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            console.log("EDIT CLICKED");
+
+            document.getElementById("id").value = this.dataset.id || "";
+            document.getElementById("name").value = this.dataset.name || "";
+            document.getElementById("age").value = this.dataset.age || "";
+            document.getElementById("gender").value = this.dataset.gender || "";
+            document.getElementById("phone").value = this.dataset.phone || "";
+            document.getElementById("email").value = this.dataset.email || "";
+            document.getElementById("address").value = this.dataset.address || "";
+        });
+    });
+
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.querySelectorAll(".edit-btn").forEach(btn => {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            console.log("EDIT CLICKED");
+
+            function setValue(id, value) {
+                const el = document.getElementById(id);
+                if (el) el.value = value || "";
+            }
+
+            setValue("id", this.dataset.id);
+            setValue("customer_id", this.dataset.customer);
+            setValue("medicine_name", this.dataset.medicine);
+            setValue("quantity", this.dataset.quantity);
+            setValue("unit_price", this.dataset.unit);
+            setValue("discount", this.dataset.discount);
+            setValue("tax", this.dataset.tax);
+            setValue("total_amount", this.dataset.total);
+            setValue("payment_method", this.dataset.payment);
+        });
+    });
+
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.querySelectorAll(".edit-purchase-btn").forEach(btn => {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            function setValue(id, value) {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.value = value || "";
+                }
+            }
+
+            setValue("id", this.dataset.id);
+            setValue("supplier_id", this.dataset.supplier);
+            setValue("medicine_name", this.dataset.medicine);
+            setValue("quantity", this.dataset.quantity);
+            setValue("purchase_price", this.dataset.price);
+            setValue("total_amount", this.dataset.total);
+            setValue("purchase_date", this.dataset.date);
+
+            console.log("Purchase edit loaded");
+        });
+    });
+
+});
+</script>
+</body>
+</html>

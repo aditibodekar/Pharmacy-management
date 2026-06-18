@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sales</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Pharmacy System</h2>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/medicines-page">Medicines</a>
+    <a href="/customers-page">Customers</a>
+    <a href="/suppliers-page">Suppliers</a>
+    <a href="/sales-page">Sales</a>
+    <a href="/purchases-page">Purchases</a>
+</div>
+
+<div class="main-content">
+    {% extends "base.html" %}
+{% block content %}
+
+<h1>Sales Management</h1>
+
+<div class="form-container">
+    <form method="POST" action="/sales">
+
+    <input type="hidden" id="id" name="id">
+
+    <input type="text" id="customer_id" name="customer_id" placeholder="Customer ID">
+    <input type="text" id="medicine_name" name="medicine_name" placeholder="Medicine Name">
+    <input type="number" id="quantity" name="quantity" placeholder="Quantity">
+    <input type="number" id="unit_price" name="unit_price" placeholder="Unit Price">
+    <input type="number" id="discount" name="discount" placeholder="Discount">
+    <input type="number" id="tax" name="tax" placeholder="Tax">
+    <input type="number" id="total_amount" name="total_amount" placeholder="Total Amount">
+    <input type="text" id="payment_method" name="payment_method" placeholder="Payment Method">
+
+    <button type="submit">Save Sale</button>
+
+</form>
+</div>
+
+<div class="table-container">
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Customer ID</th>
+        <th>Medicine</th>
+        <th>Qty</th>
+        <th>Price</th>
+        <th>Discount</th>
+        <th>Tax</th>
+        <th>Total</th>
+        <th>Payment</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for sale in sales %}
+    <tr>
+        <td>{{ sale.id }}</td>
+        <td>{{ sale.customer_id }}</td>
+        <td>{{ sale.medicine_name }}</td>
+        <td>{{ sale.quantity }}</td>
+        <td>{{ sale.unit_price }}</td>
+        <td>{{ sale.discount }}</td>
+        <td>{{ sale.tax }}</td>
+        <td>{{ sale.total_amount }}</td>
+        <td>{{ sale.payment_method }}</td>
+        <td>
+            <a href="#" class="edit-btn"
+   data-id="{{ sale.id }}"
+   data-customer="{{ sale.customer_id }}"
+   data-medicine="{{ sale.medicine_name }}"
+   data-quantity="{{ sale.quantity }}"
+   data-unit="{{ sale.unit_price }}"
+   data-discount="{{ sale.discount }}"
+   data-tax="{{ sale.tax }}"
+   data-total="{{ sale.total_amount }}"
+   data-payment="{{ sale.payment_method }}">
+   Edit
+</a>
+
+<a href="/delete-sale/{{ sale.id }}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+
+{% endblock %}
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.querySelectorAll(".edit-btn").forEach(btn => {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            console.log("EDIT CLICKED");
+
+            function setValue(id, value) {
+                const el = document.getElementById(id);
+                if (el) el.value = value || "";
+            }
+
+            setValue("id", this.dataset.id);
+            setValue("customer_id", this.dataset.customer);
+            setValue("medicine_name", this.dataset.medicine);
+            setValue("quantity", this.dataset.quantity);
+            setValue("unit_price", this.dataset.unit);
+            setValue("discount", this.dataset.discount);
+            setValue("tax", this.dataset.tax);
+            setValue("total_amount", this.dataset.total);
+            setValue("payment_method", this.dataset.payment);
+        });
+    });
+
+});
+</script>
+</body>
+</html>
